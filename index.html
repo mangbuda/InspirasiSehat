@@ -1,9 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My GitHub Page</title>
+  <meta charset="UTF-8">
+  <title>JSON Editor with Inline Labels</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Optional: Hide label titles for HTML label fields */
+    [data-schemapath*='customLabel'] .form-group > label {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello from GitHub Pages!</h1>
+  <div class="container mt-5">
+    <h2 class="mb-3">Step Editor with Inline Labels</h2>
+    <div id="editor_holder"></div>
+  </div>
+
+  <!-- JSON Editor & Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@2.10.1/dist/jsoneditor.min.js"></script>
+  <script>
+    const schema = {
+      title: "",
+      type: "object",
+      properties: {
+        customLabel1: {
+          type: "string",
+          format: "html",
+          default: "<p><strong>Action:</strong> Ping Migrated Server</p>"
+        },
+        customLabel2: {
+          type: "string",
+          format: "html",
+          default: "<p><strong>Expected Result:</strong> Success</p>"
+        },
+        customLabel3: {
+          type: "string",
+          format: "html",
+          default: "<p><strong>Observed Result:</strong> RTO</p>"
+        },
+        name: {
+          type: "string",
+          title: "Name"
+        },
+        status: {
+          type: "string",
+          title: "Status"
+        }
+      }
+    };
+
+    const editor = new JSONEditor(document.getElementById("editor_holder"), {
+      schema: schema,
+      theme: "bootstrap4",
+      disable_collapse: true,
+      disable_edit_json: true,
+      disable_properties: true,
+      show_errors: "never"
+    });
+  </script>
 </body>
 </html>
